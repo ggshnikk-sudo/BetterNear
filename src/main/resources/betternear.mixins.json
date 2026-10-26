@@ -1,0 +1,12 @@
+{
+  "required": true,
+  "package": "gg_tv.betternear.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "client": [
+    "ClientPacketListenerMixin",
+    "EntityMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
