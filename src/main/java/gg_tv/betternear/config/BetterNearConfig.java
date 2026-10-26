@@ -15,6 +15,14 @@ public class BetterNearConfig {
     /** Не подсвечивать игроков в спектаторе. */
     public boolean hideSpectators = false;
 
+    /**
+     * Показывать NBT/компоненты предмета в тултипе экрана разведки.
+     * По умолчанию выключено: у предметов с большим custom_data тултип
+     * перекрывает пол-экрана. Пока выключено, тултип в экране разведки
+     * строится обычным (не advanced) — F3+H на него не влияет.
+     */
+    public boolean showItemNbt = false;
+
     /** Сколько секунд держится разовая подсветка после /bn. */
     public double highlightSeconds = 5.0;
 }

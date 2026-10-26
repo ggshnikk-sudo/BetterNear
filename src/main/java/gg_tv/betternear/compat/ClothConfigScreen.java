@@ -61,6 +61,14 @@ final class ClothConfigScreen {
                 .setSaveConsumer(v -> cfg.hideSpectators = v)
                 .build());
 
+        main.addEntry(entries.startBooleanToggle(
+                        Component.literal("Показывать NBT предмета"), cfg.showItemNbt)
+                .setDefaultValue(false)
+                .setTooltip(Component.literal("Дамп NBT/компонентов в тултипе экрана разведки. "
+                        + "Выключено — тултип компактный, даже если включены advanced-тултипы (F3+H)."))
+                .setSaveConsumer(v -> cfg.showItemNbt = v)
+                .build());
+
         return builder.build();
     }
 }

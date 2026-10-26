@@ -17,6 +17,7 @@ class BetterNearConfigTest {
         assertEquals(150.0, c.radius);
         assertFalse(c.hideInvisible);
         assertFalse(c.hideSpectators);
+        assertFalse(c.showItemNbt);
         assertEquals(5.0, c.highlightSeconds);
     }
 
@@ -27,12 +28,14 @@ class BetterNearConfigTest {
         c.radius = 250.5;
         c.hideInvisible = true;
         c.hideSpectators = true;
+        c.showItemNbt = true;
         c.highlightSeconds = 12.5;
         String json = gson.toJson(c);
         BetterNearConfig back = gson.fromJson(json, BetterNearConfig.class);
         assertEquals(250.5, back.radius);
         assertTrue(back.hideInvisible);
         assertTrue(back.hideSpectators);
+        assertTrue(back.showItemNbt);
         assertEquals(12.5, back.highlightSeconds);
     }
 

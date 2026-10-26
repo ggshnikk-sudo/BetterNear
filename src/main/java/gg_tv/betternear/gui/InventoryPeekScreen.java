@@ -1,5 +1,6 @@
 package gg_tv.betternear.gui;
 
+import gg_tv.betternear.BetterNearClient;
 import gg_tv.betternear.inspect.PlayerInspect;
 import gg_tv.betternear.inspect.PlayerSnapshot;
 import gg_tv.betternear.util.Fmt;
@@ -12,7 +13,9 @@ import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.Identifier;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -146,9 +149,25 @@ public final class InventoryPeekScreen extends Screen {
                     Component.literal("Пусто").withColor(Fmt.GRAY)), mouseX, mouseY);
             return;
         }
-        List<Component> lines = new ArrayList<>(Screen.getTooltipFromItem(this.minecraft, stack));
+        graphics.setComponentTooltipForNextFrame(this.font, itemTooltipLines(stack), mouseX, mouseY);
+    }
+
+    /**
+     * Тултип предмета для экрана разведки. По умолчанию без NBT: даже с включёнными
+     * advanced-тултипами (F3+H) простыня из custom_data не разворачивается на пол-экрана.
+     * Дамп компонентов добавляется только если в конфиге включён {@code showItemNbt}.
+     */
+    private List<Component> itemTooltipLines(ItemStack stack) {
+        Minecraft mc = this.minecraft;
+        if (!BetterNearClient.CONFIG.showItemNbt) {
+            Item.TooltipContext context = mc.level != null
+                    ? Item.TooltipContext.of(mc.level)
+                    : Item.TooltipContext.EMPTY;
+            return stack.getTooltipLines(context, mc.player, TooltipFlag.NORMAL);
+        }
+        List<Component> lines = new ArrayList<>(Screen.getTooltipFromItem(mc, stack));
         lines.addAll(PlayerInspect.dumpComponents(stack, 12));
-        graphics.setComponentTooltipForNextFrame(this.font, lines, mouseX, mouseY);
+        return lines;
     }
 
     private static boolean hovered(int x, int y, int mouseX, int mouseY) {
